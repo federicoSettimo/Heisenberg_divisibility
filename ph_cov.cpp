@@ -27,7 +27,7 @@ static Eigen::Vector2cd plus_state {{1./sqrt(2.),1./sqrt(2.)}};
 static Eigen::Vector2cd minus_state {{1./sqrt(2.),-1./sqrt(2.)}};
 
 // Params
-double tmax_rates = 3., dt = 0.001, tmax_norm = 10.;
+double tmax_rates = 2.2, dt = 0.001, tmax_norm = 5.;
 
 double lambda_T (double t) {return .5*sin(t);}
 double lambda_z (double t) {return exp(-t);}

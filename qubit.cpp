@@ -114,7 +114,7 @@ double Inc_steering (const Vector3d &x, const Vector3d &y) {
     //Vector4d xprime {{1., x(0), x(1), x(2)}}, yprime {{1., y(0), y(1), y(2)}};
     for (double l = 0.; l <= 1.; l += dlambda) {
         Matrix2cd X = BlochToMatrix(x), Y = BlochToMatrix(y);
-        if (comp(MatrixToBloch((1.+l)*X + .5*X.trace()*l*id), MatrixToBloch((1.+l)*Y + .5*Y.trace()*l*id)) >= 0.)
+        if (comp(MatrixToBloch((1.-l)*X + .5*X.trace()*l*id), MatrixToBloch((1.-l)*Y + .5*Y.trace()*l*id)) >= 0.)
             return l;
     }
     return 1.;

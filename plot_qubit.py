@@ -28,29 +28,37 @@ b = funcs[1]
 
 t = np.linspace(0, tmax, len(TD))
 
-fig, ax = plt.subplots(1,2, figsize=(13,4), sharex=True, sharey=True, tight_layout=True)
+fig, ax = plt.subplots(1,2, figsize=(13,4), sharex=True, sharey=False, tight_layout=True)
 
-ax[0].plot(t, OD, label=r'$D_\infty$', color='red')
-ax[0].plot(t, TD, '--', label=r'$D_1$', color='blue')
+ax[0].plot(t, OD, '-.', label=r'$D_\infty$', color='red')
+ax[0].plot(t, TD, label=r'$D_1$', color='black')
 
-size_inset = .3
-axx = ax[0].inset_axes([0.98-size_inset, 0.02, size_inset, size_inset])
-axx.plot(t, lam, label=r'$\lambda$')
-axx.plot(t, b, label=r'$\beta$')
+size_inset = .35
+axx = ax[0].inset_axes([0.05, 0.02, size_inset, size_inset])
+axx.plot(t, lam, label=r'$\lambda$', color='r')
+axx.plot(t, b, '--', label=r'$\beta$', color='b')
 axx.set_xticks([])
+axx.axvline(1, color='black', linewidth=1., linestyle='--')
 
-ax[1].plot(t, inc, label=r'$I_0$', color='red')
-ax[1].plot(t, inc_steer, label=r'$I_{\text{steer}}$', color='blue')
-ax[1].plot(t, sharpness, '--', label=r'$\Sigma$', color='darkgreen')
-#axx_t = ax[1].twinx()
-#axx_t.plot(t, sharpness, '--', label=r'$\Sigma$', color='darkgreen')
+ax[1].plot(t, inc, label=r'$I_{0,\text{steer}}$', color='black')
+ax[1].plot(t, sharpness, '-.', label=r'$\Sigma$', color='red')
+
+fontsize = 16
 
 for i in range(2):
-    ax[i].set_xlabel(r'$t$')
-    ax[i].legend(loc = "lower left")
-    ax[i].axvline(1, color='red', linewidth=.5)
-ax[0].set_title(r'$D_\infty(\Phi^*_t[X], \Phi^*_t[Y])$ and $D_1(\Phi_t[X], \Phi_t[Y])$')
-ax[1].set_title(r'Incompatibility and sharpness')
-axx.legend(loc = "lower right")
+    ax[i].set_xlabel(r'$t$', fontsize=fontsize)
+    ax[i].legend(loc = "upper left", fontsize=fontsize-2)
+    ax[i].axvline(1, color='black', linewidth=1., linestyle='--')
+    ax[i].tick_params(axis='both', which='major', labelsize=fontsize-3)
+#ax[0].legend(loc = "upper right", fontsize=fontsize-2)
+#ax[1].legend(loc = "upper left", fontsize=fontsize-2)
+#ax[0].set_ylabel(r'$D_\infty(\Phi^*_t[X], \Phi^*_t[Y])$ and $D_1(\Phi_t[X], \Phi_t[Y])$', fontsize=fontsize)
+ax[0].set_ylabel(r'$D_\infty$ and $D_1$', fontsize=fontsize)
+ax[1].set_ylabel(r'$I_{0,\text{steer}}$ and $\Sigma$', fontsize=fontsize)
+ax[0].set_ylim(-0.05, 1.05)
+axx.legend(loc = "upper left", fontsize=fontsize-4)
+axx.tick_params(axis='both', which='major', labelsize=fontsize-4)
+
+plt.savefig('qubit.png', dpi=300)
 
 plt.show()

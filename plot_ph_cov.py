@@ -45,26 +45,34 @@ for i in range(Npoints):
     F[i] = norms[1]
     E_F[i] = norms[2]
 
-fig, ax = plt.subplots(1,2, figsize=(13,5), sharex=False, sharey=False, tight_layout=False)
+fig, ax = plt.subplots(1,1, figsize=(9,5), sharex=False, sharey=False, tight_layout=False)
 
-colors = ['b', 'g', 'r', 'c', 'm', 'y', 'k']
-ax[0].plot(t_R, gamma_p, label = r'$\gamma_+$', color=colors[0])
-ax[0].plot(t_R, gamma_m, label = r'$\gamma_-$', color=colors[1])
-ax[0].plot(t_R, gamma_z, label = r'$\gamma_z$', color=colors[2])
-ax[0].plot(t_R, xi_p, '--', label = r'$\xi_+$', color=colors[0])
-ax[0].plot(t_R, xi_m, '--', label = r'$\xi_-$', color=colors[1])
-ax[0].plot(t_R, xi_z, '--', label = r'$\xi_z$', color=colors[2])
-ax[0].axhline(0, color='black', linewidth=1.)
+ax.plot(t_N, E, '--', label = r'$X=\vert0\rangle\langle0\vert$, $Y=0$', color='green')
+ax.plot(t_N, F, '-.', label = r'$X=0$, $Y=\vert1\rangle\langle1\vert$', color='red')
+ax.plot(t_N, E_F, label = r'$X=\vert0\rangle\langle0\vert$, $Y=\vert1\rangle\langle1\vert$', color='black')
 
-ax[1].plot(t_N, E, label = r'$E$')
-ax[1].plot(t_N, F, label = r'$F$')
-ax[1].plot(t_N, E_F, label = r'$E-F$')
+colors = ['r', 'b']
+axx = inset_axes(ax, width="33%", height="33%", loc=1)
+axx.plot(t_R, gamma_p, label = r'$\gamma_\pm$', color=colors[0])
+axx.plot(t_R, gamma_m, '--', color=colors[0])
+axx.plot(t_R, xi_p, label = r'$\xi_\pm$', color=colors[1])
+axx.plot(t_R, xi_m, '--', color=colors[1])
+axx.axhline(0, color='black', linewidth=1.)
 
-for i in range(2):
-    ax[i].legend(loc = "lower left")
-    ax[i].set_xlabel(r'$t$')
-ax[0].set_title('Rates')
-ax[1].set_title(r'$\Vert \Phi^\ddag_t[X] \Vert_\infty$')
+t_NM = 1.88
+ax.axvline(t_NM, color='black', linewidth=1., linestyle='--')
+axx.axvline(t_NM, color='black', linewidth=1., linestyle='--')
+
+
+fontsize = 16
+ax.legend(loc = "lower left", fontsize=fontsize-2)
+ax.set_xlabel(r'$t$', fontsize=fontsize)
+ax.set_ylabel(r'$D_\infty(\Phi^*_t[X], \Phi^*_t[Y])$', fontsize=fontsize)
+ax.tick_params(axis='both', which='major', labelsize=fontsize-3)
+
+axx.legend(loc = "lower left", fontsize=fontsize-4)
+axx.set_xlabel(r'$t$', fontsize=fontsize-2)
+axx.tick_params(axis='both', which='major', labelsize=fontsize-5)
 
 plt.savefig('ph_cov.png', dpi=300)
 
